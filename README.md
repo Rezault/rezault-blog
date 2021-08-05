@@ -1,0 +1,2 @@
+# rezault-blog
+my blog
