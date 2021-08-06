@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}{{user.username}}'s Profile{% endblock %}
+{% block header %}
+
+{% block content %}
+
+<br/>
+<div class="card border-dark">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <div>
+            <h2 align="center">User Info</h1>
+        </div>
+
+        {% if developers[user.id] %}
+            <h2 style="color:red">DEVELOPER</h5>
+        {% endif %}
+        </div>
+
+        <br/>
+        <h1 align="center">{{user.username}}</h1>
+        <img src={{user.profile_picture}} height=150 width=150 style="display:block; margin-left:auto; margin-right:auto;">
+        <small align="center" class="text-muted">Date joined: {{user.date_created}}</small>
+        <small align="center" class="text-muted">Posts: {{user.posts|length}}</small>
+
+        {% if current_user.username == user.username %}
+            <a align="center" href="/edit-profile"><button type="button" class="btn btn-primary btn-lg">Edit Profile</button></a>
+            <br/>
+        {% endif %}
+    </div>
+</div>
+<br/>
+
+<div align="center">
+    <a href="/posts/{{user.username}}"><button type="button" class="btn btn-primary btn-lg">View Posts</button></a>
+</div>
+
+<br/>
+
+<div align="center">
+    <a href="/home"><button type="button" class="btn btn-secondary btn-lg">Back</button></a>
+</div>
+
+{% endblock %}
+
+{% endblock %}

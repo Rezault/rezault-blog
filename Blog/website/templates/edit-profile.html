@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Edit Profile{% endblock %}
+{% block header %}
+
+{% block content %}
+
+<br/>
+<div class="card border-dark">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h2>Settings</h2>
+    </div>
+
+    <div class="card-body">
+        <ul class="list-group">
+            <li class="list-group-item"><h5>Username: {{user.username}}</h5></li>
+            <li class="list-group-item"><h5>Email: {{user.email}}</h5></li>
+            <li class="list-group-item">
+                <h5>Profile picture:</h5><img src={{user.profile_picture}} width=100 height=100>
+                <br/>
+                <form method="POST" action="/change-profile-picture">
+                    <textarea name="url" id="url" class="form-control" placeholder="Image URL Here"></textarea>
+                    <div align="center">
+                        <button type="submit" class="btn btn-lg btn-primary">Change Profile Picture</button>
+                    </div>
+                </form>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<br/>
+
+{% endblock %}
+
+{% endblock %}
