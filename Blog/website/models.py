@@ -12,6 +12,10 @@ class User(db.Model, UserMixin):
     comments = db.relationship("Comment", backref="user", passive_deletes=True)
     profile_picture = db.Column(db.String(200), nullable=False)
 
+    banned = db.Column(db.Boolean, default=False)
+    admin = db.Column(db.Boolean, default=False)
+    developer = db.Column(db.Boolean, default=False)
+
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.Text, nullable=False)

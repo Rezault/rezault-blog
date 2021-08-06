@@ -15,12 +15,15 @@
         <div class="card">
             <div class="card-header d-flex align-items-center">
                 <img src="{{l_user.profile_picture}}" width=50, height=50>
-                {% if l_user.username == "rez" %}
+                {% if l_user.developer == True %}
                     <a href="/profiles/{{l_user.id}}" style="color:red; padding-left:10px;">{{l_user.username}} [DEVELOPER]</a>
+                {% elif l_user.admin == True %}
+                    <a href="/profiles/{{l_user.id}}" style="color:green; padding-left:10px;">{{l_user.username}} [ADMIN]</a>
                 {% else %}
                     <a href="/profiles/{{l_user.id}}" style="padding-left:10px;">{{l_user.username}}</a>
                 {% endif %}
 
+                <small class="text-muted" style="padding-left:75%;">ID: {{l_user.id}}</small>
             </div>
         </div>
 

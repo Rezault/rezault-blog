@@ -1,1 +1,2 @@
-developers = [0, 1]
+admins = ["rez"]
+developers = ["rez"]

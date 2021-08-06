@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
 from .models import Post, User, Comment
 from . import db
-from .lists import developers
+from .lists import admins, developers
 import requests
 
 views = Blueprint("views", __name__)
@@ -11,8 +11,18 @@ views = Blueprint("views", __name__)
 @views.route("/home")
 @login_required
 def home():
+    if current_user.username in admins:
+        if current_user.admin == False:
+            current_user.admin = True
+            db.session.commit()
+
+    if current_user.username in developers:
+        if current_user.developer == False:
+            current_user.developer = True
+            db.session.commit()
+
     posts = Post.query.all()
-    return render_template("home.html", user=current_user, posts=posts, developers=developers)
+    return render_template("home.html", user=current_user, posts=posts)
 
 @views.route("/create-post", methods=['GET', 'POST'])
 @login_required
@@ -81,7 +91,7 @@ def posts(username):
         return redirect(url_for("views.home"))
 
     posts = user.posts
-    return render_template("posts.html", user=user, posts=posts, username=username, developers=developers)
+    return render_template("posts.html", user=user, posts=posts, username=username)
 
 @views.route("/create-comment/<post_id>", methods=["POST"])
 @login_required
@@ -110,7 +120,7 @@ def user_profile(id):
         flash("User does not exist.", category="error")
         return redirect(url_for("views.home"))
 
-    return render_template("profiles.html", current_user=current_user, user=user, posts=posts, developers=developers)
+    return render_template("profiles.html", current_user=current_user, user=user, posts=posts)
 
 @views.route("/edit-profile")
 @login_required
@@ -141,4 +151,13 @@ def change_profile_picture():
 @login_required
 def users():
     users = User.query.all()
-    return render_template("users.html", user=current_user, users=users, developers=developers)
+    return render_template("users.html", user=current_user, users=users)
+
+@views.route("/admin-panel")
+@login_required
+def admin_panel():
+    if current_user.admin == False or current_user.developer == False:
+        flash("You do not have permission to do that.", category="error")
+        redirect(url_for(views.home))
+    
+    return render_template("admin-panel.html", user=current_user)

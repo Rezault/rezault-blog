@@ -11,8 +11,10 @@
             <h2 align="center">User Info</h1>
         </div>
 
-        {% if developers[user.id] %}
+        {% if user.developer == True %}
             <h2 style="color:red">DEVELOPER</h5>
+        {% elif user.admin == True %}
+            <h2 style="color:green">ADMIN</h5>  
         {% endif %}
         </div>
 
